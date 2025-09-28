@@ -75,21 +75,26 @@ chmod 755 "${BASE_DIR}"
 
 # ---------- Pacotes de sistema (espelhando a Dockerfile) ----------
 echo "[1/7] Instalar todos os pacotes de software do Ubuntu necessarios..."
-sudo apt update && sudo apt install -y --no-install-recommends \
-  build-essential gcc g++ make pkg-config autoconf automake libtool cmake gawk \
-  git vim bash xterm \
-  sntp ntp wget curl lynx net-tools traceroute tcptraceroute ipcalc socat hping3 httpie whois ngrep \
+sudo apt update
+sudo apt install -y --no-install-recommends \
+  build-essential gcc g++ make pkg-config autoconf automake libtool cmake \
+  gawk git vim bash xterm dbus-x11 netsurf-gtk links2 \
+  sntp ntp wget curl lynx net-tools traceroute tcptraceroute \
+  ipcalc socat hping3 httpie whois ngrep \
   tcpdump wireshark tshark iperf iperf3 ethtool nftables iproute2 iputils-ping \
+  mtr-tiny nmap netcat-openbsd arping iftop nload dillo \
   openssh-server openssh-client openssh-sftp-server \
   vsftpd atftp atftpd apache2 mini-httpd openvpn \
   isc-dhcp-server isc-dhcp-client \
   bind9 bind9-utils dnsutils inetutils-telnet \
   ca-certificates sudo tzdata software-properties-common unzip \
-  libpcre3-dev libprotobuf-dev libxml2-dev libpcap0.8 libpcap0.8-dev libreadline-dev \
+  protobuf-compiler libpcre3-dev libprotobuf-dev libxml2-dev \
+  libpcap0.8 libpcap0.8-dev libreadline-dev \
   libsqlite3-0 libsqlite3-dev libssl-dev libev-dev uuid-dev \
   python3-dev python3-pip python3-venv python3-tk \
-  libtk-img tk \
-  imagemagick python3-pythonmagick \
+  libtk-img tk imagemagick python3-pythonmagick \
+  libnl-3-dev libnl-route-3-dev libnl-genl-3-dev \
+  libnl-nf-3-dev libnl-cli-3-dev \
   openvswitch-switch python3-openvswitch mininet
 
 # (opcional) manter imagem/host mais limpo
@@ -155,7 +160,6 @@ if [[ $curl_rc -ne 0 ]]; then
 else
   unzip -o "/opt/${PROTOC_ZIP}" -d "${PROTOC_DIR}"
   chmod -R a+rX "${PROTOC_DIR}"
-#  export PATH="${PROTOC_DIR}/bin:${PATH}"
 fi
 
 # ---------- Clonar e instalar EMANE ----------
@@ -207,7 +211,6 @@ rm -rf "/opt/${PROTOC_ZIP}" || true
 echo "[7/7] Pronto. Podes iniciar o core-daemon assim:"
 echo "sudo ${VENV_PATH}/bin/core-daemon"
 echo
-echo "Sugestão: cria um service systemd opcional em /etc/systemd/system/core-daemon.service"
 cat >/etc/systemd/system/core-daemon.service <<'UNIT'
 [Unit]
 Description=CORE network emulator daemon
@@ -223,9 +226,26 @@ User=root
 WantedBy=multi-user.target
 UNIT
 
-echo "Para ativar no arranque:"
+echo "Formas de correr o core-daemon (obrigatório para usar core-gui)"
+echo
+echo "1. Execução automática do serviço core-daemom, no arranque do sistema:"
+echo
+echo "  systemctl enable core-daemon.service"
 echo "  systemctl daemon-reload"
-echo "  systemctl enable --now core-daemon.service"
+echo
+echo "2. Execução manual do core-daemon, quando necessário:"
+echo 
+echo "  systemctl stop core-daemon"
+echo "  systemctl start core-daemon"
+echo "  systemctl status core-daemon"
+echo
+echo "3. Execção manual do core-daemon numa bash (talvez o mais adequado):"
+echo
+echo "  sudo core-daemon"
+echo
+echo "Estando o core-daemon em execução, pode iniciar o interface GUI"
+echo 
+echo "  sudo core-gui"
 echo
 echo "Done."
 

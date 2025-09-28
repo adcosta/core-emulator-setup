@@ -20,6 +20,37 @@ renmove everything and try again:
 sudo ./install_core_emane.sh
 ```
 
+## Run daemon and GUI
+
+Ways to run core-daemon (required to use core-gui)
+
+1. Automatically run the core-daemon service at system startup:
+
+```bash
+  systemctl enable core-daemon.service
+  systemctl daemon-reload
+```
+
+2. Manually running core-daemon when necessary:
+
+```bash
+  systemctl stop core-daemon
+  systemctl start core-daemon
+  systemctl status core-daemon
+```
+
+3. Manually running core-daemon in a bash (perhaps the most appropriate):
+
+```bash
+  sudo core-daemon
+```
+
+Once core-daemon is running, you can start the GUI interface
+
+```bash
+  sudo core-gui
+```
+
 ## Links
 
 - [CORE Documentation](https://coreemu.github.io/core/index.html)
