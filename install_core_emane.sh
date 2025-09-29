@@ -78,7 +78,7 @@ echo "[1/7] Instalar todos os pacotes de software do Ubuntu necessarios..."
 sudo apt update
 sudo apt install -y --no-install-recommends \
   build-essential gcc g++ make pkg-config autoconf automake libtool cmake \
-  gawk git vim bash xterm dbus-x11 netsurf-gtk links2 \
+  gawk git vim bash xterm dbus-x11 netsurf-gtk firefox chromium-browser \
   sntp ntp wget curl lynx net-tools traceroute tcptraceroute \
   ipcalc socat hping3 httpie whois ngrep \
   tcpdump wireshark tshark iperf iperf3 ethtool nftables iproute2 iputils-ping \

@@ -4,7 +4,7 @@ Simple scripts to setup CORE Emulator on Linux (Ubuntu)
 
 ## Install
 
-Make sure you are using Ubuntu 20.04 version and run install script:
+Make sure you are using Ubuntu 22.04 version and run install script:
 
 ```bash
 sudo ./install_core_emane.sh
@@ -12,7 +12,7 @@ sudo ./install_core_emane.sh
 
 ## Uninstall
 
-If something goes wrong during install, while intallation script 
+If something goes wrong during install, while the intallation script 
 can deal with another install attempt, it is maybe easier to simply
 renmove everything and try again:
 
